@@ -31,6 +31,11 @@ export default function AboutPreview() {
       alt: "Bedroom project",
       caption: "Bedroom Serenity",
     },
+    {
+      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759374887/1000066537_ysddkj.png",
+      alt: "Coffee shop project",
+      caption: "Coffee Shop Ambience",
+    },
   ]
 
   return (
@@ -52,7 +57,7 @@ export default function AboutPreview() {
                 alt={img.alt}
                 width={1200}
                 height={800}
-                className="object-cover w-full h-[75vh] transform group-hover:scale-105 transition duration-700"
+                className="object-cover object-center w-full h-[45vh] sm:h-[55vh] lg:h-[70vh] transform group-hover:scale-105 transition duration-700"
               />
               {/* Overlay caption */}
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent text-white p-6">
@@ -86,8 +91,8 @@ export default function AboutPreview() {
           >
             At <span className="font-semibold">Lightning Deco</span>, we design with{" "}
             <span className="italic text-gold">light itself</span>.  
-            Each room — kitchens, bathrooms, living spaces, and bedrooms — is
-            shaped to balance shadow and radiance, elegance and function.  
+            Each room — kitchens, bathrooms, living spaces, bedrooms, and even coffee shops — 
+            is shaped to balance shadow and radiance, elegance and function.  
             Our mission is to transform ordinary spaces into timeless sanctuaries
             of beauty and harmony.
           </motion.p>

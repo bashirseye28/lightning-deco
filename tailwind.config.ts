@@ -27,5 +27,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: (utilities: Record<string, any>, variants?: string[]) => void }) {
+      const newUtilities = {
+        ".font-heading-italic-bold": {
+          fontFamily: "Playfair Display, serif",
+          fontWeight: "700", // bold
+          fontStyle: "italic", // italic
+        },
+      }
+      addUtilities(newUtilities, ["responsive", "hover"])
+    },
+  ],
 }

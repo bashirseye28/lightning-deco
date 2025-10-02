@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Image from "next/image"
@@ -8,7 +8,7 @@ import Image from "next/image"
 const slides = [
   {
     type: "video",
-    src: "https://res.cloudinary.com/dnmoy5wua/video/upload/v1759279505/export_1749305387713_gcr4ma.mov",
+    src: "https://res.cloudinary.com/dnmoy5wua/video/upload/v1759279456/58bc0b6f-1552-4475-b55c-8bc5e615fcaf_lylhrd.mp4",
     title: "Lightning Deco",
     description: "Luxury interior design studio. We design with light itself.",
     buttonText: "About Us",
@@ -16,15 +16,15 @@ const slides = [
   },
   {
     type: "image",
-    src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279442/IMG_0643_dzasll.jpg",
+    src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279434/IMG_0162_jnuri5.jpg",
     title: "Refined Bedroom",
     description: "A sanctuary of calm and timeless design.",
     buttonText: "View Project",
     buttonLink: "/projects",
   },
   {
-    type: "video",
-    src: "https://res.cloudinary.com/dnmoy5wua/video/upload/v1759279376/955a722d-af4f-41bd-9f84-182abdcbab16_feubjw.mp4",
+    type: "image",
+    src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318624/IMG_0920_pdalfs.png",
     title: "Modern Living Room",
     description: "Elegant open spaces that invite warmth and light.",
     buttonText: "View Project",
@@ -32,7 +32,7 @@ const slides = [
   },
   {
     type: "image",
-    src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279494/IMG_0673_ogyooy.jpg",
+    src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318911/IMG_0973_soansb.png",
     title: "Luxury Kitchen",
     description: "Crafted with detail, blending form and function.",
     buttonText: "View Project",
@@ -42,17 +42,45 @@ const slides = [
 
 export default function Hero() {
   const [current, setCurrent] = useState(0)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
-  const nextSlide = () => {
-    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+  const nextSlide = () => setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+  const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
+
+  // ✅ Auto-play every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide()
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [current])
+
+  // ✅ Swipe gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
   }
 
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    if (distance > 50) nextSlide() // swipe left
+    if (distance < -50) prevSlide() // swipe right
+    setTouchStart(null)
+    setTouchEnd(null)
   }
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div
+      className="relative w-full h-screen overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -69,6 +97,7 @@ export default function Hero() {
               autoPlay
               loop
               muted
+              playsInline
               className="w-full h-full object-cover"
             />
           ) : (
@@ -76,28 +105,47 @@ export default function Hero() {
               src={slides[current].src}
               alt={slides[current].title}
               fill
+              priority
               className="object-cover"
             />
           )}
 
           {/* Overlay */}
-          <div className="absolute bottom-20 left-12 text-white max-w-lg">
-            <h2 className="text-4xl font-playfair italic font-semibold mb-2">
+          <div className="absolute inset-0 flex flex-col justify-end pb-20 px-6 md:pb-28 md:pl-12 text-white">
+            {/* Title always visible */}
+            <h2 className="text-3xl md:text-5xl font-playfair italic font-semibold mb-3 text-left">
               {slides[current].title}
             </h2>
-            <p className="text-lg font-lato mb-6">{slides[current].description}</p>
-            <a
-              href={slides[current].buttonLink}
-              className="inline-block px-6 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
-            >
-              {slides[current].buttonText}
-            </a>
+
+            {/* Description + Button (Desktop only) */}
+            <div className="hidden md:block max-w-lg">
+              <p className="text-lg font-lato mb-6">{slides[current].description}</p>
+              <a
+                href={slides[current].buttonLink}
+                className="inline-block px-6 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
+              >
+                {slides[current].buttonText}
+              </a>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Arrows Bottom Right */}
-      <div className="absolute bottom-8 right-8 flex space-x-4">
+      {/* Pagination Dots */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-3 h-3 rounded-full transition ${
+              i === current ? "bg-gold scale-110" : "bg-white/50 hover:bg-white"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Arrows - Desktop only */}
+      <div className="hidden md:flex absolute bottom-6 right-6 space-x-4">
         <button
           onClick={prevSlide}
           className="p-3 rounded-full bg-black/50 text-white hover:bg-gold hover:text-black transition"

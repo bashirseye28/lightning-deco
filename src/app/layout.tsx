@@ -47,9 +47,21 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* iOS & Mobile Safe-Area Handling */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className="bg-black text-white font-body antialiased">
+        {/* Navigation */}
         <Navbar />
-        <main>{children}</main>
+
+        {/* Main Content */}
+        <main className="relative min-h-screen">{children}</main>
+
+        {/* Footer */}
         <Footer />
 
         {/* JSON-LD Schema.org for SEO */}

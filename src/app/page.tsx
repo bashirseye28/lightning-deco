@@ -1,7 +1,9 @@
 import Hero from "@/components/Home/Hero"
+import Intro from "@/components/Home/Intro"
 import AboutPreview from "@/components/Home/AboutPreview"
 import Philosophy from "@/components/Home/Philosophy"
 import FeaturedProjects from "@/components/Home/FeaturedProjects"
+import Testimonials from "@/components/Home/Testimonials"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -57,7 +59,8 @@ export default function HomePage() {
       <Hero />
 
       {/* Intro Section */}
-      <section className="py-20 px-6 text-center">
+      <Intro />
+      {/* <section className="py-20 px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-playfair italic font-semibold text-gold mb-4">
           Welcome to Lightning Deco
         </h2>
@@ -66,7 +69,7 @@ export default function HomePage() {
           to outdoor retreats, our philosophy transforms spaces into timeless
           sanctuaries of elegance and harmony.
         </p>
-      </section>
+      </section> */}
 
       {/* About Preview Section */}
       <AboutPreview />
@@ -74,6 +77,8 @@ export default function HomePage() {
       <Philosophy />
       {/* Featured Projects Section */}
       <FeaturedProjects />
+      {/* Testimonials Section */}
+      <Testimonials />
     </main>
   )
 }

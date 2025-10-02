@@ -51,10 +51,10 @@ export default function FeaturedProjects() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-heading text-gold mb-4">
+          <h2 className="text-4xl md:text-5xl font-heading italic font-bold text-gold mb-4">
             Featured Projects
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-body">
             A glimpse into our signature interiors, where light and shadow shape timeless elegance.
           </p>
         </motion.div>
@@ -76,7 +76,7 @@ export default function FeaturedProjects() {
         >
           <Link
             href="/projects"
-            className="inline-block px-8 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition-colors duration-300"
+            className="inline-block px-8 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition-colors duration-300 font-body font-medium"
           >
             View All Projects
           </Link>
@@ -120,8 +120,10 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition">
-        <h3 className="text-2xl font-semibold text-gold mb-1">{project.title}</h3>
-        <p className="text-gray-200 text-sm">{project.category}</p>
+        <h3 className="text-2xl font-heading italic font-bold text-gold mb-1">
+          {project.title}
+        </h3>
+        <p className="text-gray-200 text-sm font-body">{project.category}</p>
       </div>
 
       {/* Arrows */}
