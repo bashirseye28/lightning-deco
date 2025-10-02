@@ -1,22 +1,27 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Learn about Lightning Deco — our mission, vision, and values in luxury interior design.",
-}
+import Hero from "@/components/About/Hero"
+import AboutIntro from "@/components/About/AboutIntro"
+import MissionVisionValues from "@/components/About/MissionVisionValues"
+// import OurStory from "@/components/About/OurStory"
+// import PhilosophyBlock from "@/components/About/PhilosophyBlock"
+// import MissionVisionValues from "@/components/About/MissionVisionValues"
+import ServicesTeaser from "@/components/About/ServicesTeaser"
+import Process from "@/components/About/Process"
+import Team from "@/components/About/Team"
+import PhilosophyBlock from "@/components/About/PhilosophyBlock"
+// import Testimonials from "@/components/About/Testimonials"
+import CTA from "@/components/About/CTA"
 
 export default function AboutPage() {
   return (
-    <section className="py-20 px-6 text-center">
-      <h1 className="text-4xl md:text-5xl font-playfair text-gold mb-6">
-        About Lightning Deco
-      </h1>
-      <p className="max-w-3xl mx-auto text-lg font-lato text-gray-300">
-        At Lightning Deco, we design beyond walls and furniture. We design with
-        light itself, curating interiors that are immersive, timeless, and
-        unforgettable.
-      </p>
-    </section>
+    <>
+      <Hero />
+      <AboutIntro />
+      <MissionVisionValues />
+      <ServicesTeaser />
+      <Process />
+      <Team />
+      <PhilosophyBlock />
+      <CTA />
+    </>
   )
 }

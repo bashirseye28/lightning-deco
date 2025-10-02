@@ -10,7 +10,8 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm">
+    // <nav className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm">
+    <nav className="absolute top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 md:py-4 flex items-center justify-between safe-area-inset-top">
         {/* Logo (hidden when menu open) */}
         {!isMenuOpen && (

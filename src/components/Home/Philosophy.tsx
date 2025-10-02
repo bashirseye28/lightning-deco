@@ -11,8 +11,10 @@ export default function Philosophy() {
     offset: ["start end", "end start"],
   })
 
-  // Mobile parallax (slight vertical shift)
-  const yMobile = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+  // Mobile parallax (background + text shift)
+  const yMobileBg = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+  const yMobileText = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"])
+  const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0.7])
 
   return (
     <section
@@ -34,15 +36,18 @@ export default function Philosophy() {
         style={{
           backgroundImage:
             "url('https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318588/IMG_0068_rhcqkz.jpg')",
-          y: yMobile as any, // motion value applied only for mobile
+          y: yMobileBg as any,
         }}
       ></motion.div>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/70" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl px-6">
+      {/* Content with parallax */}
+      <motion.div
+        className="relative z-10 max-w-4xl px-6"
+        style={{ y: yMobileText, opacity: opacityText }}
+      >
         {/* Title */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -81,7 +86,7 @@ export default function Philosophy() {
             <span className="text-gold font-semibold">Lightning Deco</span> – The Art of Shadow and Light
           </span>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 }

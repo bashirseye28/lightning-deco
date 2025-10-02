@@ -4,6 +4,8 @@ import AboutPreview from "@/components/Home/AboutPreview"
 import Philosophy from "@/components/Home/Philosophy"
 import FeaturedProjects from "@/components/Home/FeaturedProjects"
 import Testimonials from "@/components/Home/Testimonials"
+import GalleryPreview from "@/components/Home/GalleryPreview"
+import ConsultationCTA from "@/components/Home/ConsultationCTA"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -79,6 +81,10 @@ export default function HomePage() {
       <FeaturedProjects />
       {/* Testimonials Section */}
       <Testimonials />
+      {/* Gallery Preview Section */}
+      <GalleryPreview />
+      {/* Consultation CTA Section */}
+      <ConsultationCTA />
     </main>
   )
 }
