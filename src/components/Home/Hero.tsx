@@ -45,8 +45,10 @@ export default function Hero() {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
-  const nextSlide = () => setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
-  const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
+  const nextSlide = () =>
+    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+  const prevSlide = () =>
+    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
 
   // ✅ Auto-play every 6 seconds
   useEffect(() => {
@@ -60,16 +62,14 @@ export default function Hero() {
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
-
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX)
   }
-
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return
     const distance = touchStart - touchEnd
-    if (distance > 50) nextSlide() // swipe left
-    if (distance < -50) prevSlide() // swipe right
+    if (distance > 50) nextSlide()
+    if (distance < -50) prevSlide()
     setTouchStart(null)
     setTouchEnd(null)
   }
@@ -111,15 +111,17 @@ export default function Hero() {
           )}
 
           {/* Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end pb-20 px-6 md:pb-28 md:pl-12 text-white">
-            {/* Title always visible */}
-            <h2 className="text-3xl md:text-5xl font-playfair italic font-semibold mb-3 text-left">
+          <div className="absolute inset-0 flex flex-col justify-end pb-40 md:pb-48 px-6 md:pl-12 text-white">
+            {/* Title */}
+            <h2 className="text-2xl md:text-5xl font-playfair italic font-semibold mb-3 text-left">
               {slides[current].title}
             </h2>
 
             {/* Description + Button (Desktop only) */}
             <div className="hidden md:block max-w-lg">
-              <p className="text-lg font-lato mb-6">{slides[current].description}</p>
+              <p className="text-lg font-lato mb-6">
+                {slides[current].description}
+              </p>
               <a
                 href={slides[current].buttonLink}
                 className="inline-block px-6 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
@@ -132,7 +134,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Pagination Dots */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+      <div className="absolute bottom-28 md:bottom-14 left-1/2 transform -translate-x-1/2 flex space-x-3">
         {slides.map((_, i) => (
           <button
             key={i}
@@ -145,7 +147,7 @@ export default function Hero() {
       </div>
 
       {/* Arrows - Desktop only */}
-      <div className="hidden md:flex absolute bottom-6 right-6 space-x-4">
+      <div className="hidden md:flex absolute bottom-14 right-6 space-x-4">
         <button
           onClick={prevSlide}
           className="p-3 rounded-full bg-black/50 text-white hover:bg-gold hover:text-black transition"
