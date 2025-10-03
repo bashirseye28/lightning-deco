@@ -7,7 +7,7 @@ import Link from "next/link"
 export default function AboutPreview() {
   const images = [
     {
-      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279490/IMG_0970_nn3j2w.png",
+      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318911/IMG_0983_lpq3bw.jpg",
       alt: "Kitchen project",
       caption: "Kitchen Design",
     },
@@ -17,12 +17,12 @@ export default function AboutPreview() {
       caption: "Bathroom Elegance",
     },
     {
-      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279373/9795CABC-ADE1-4CD1-A5C9-0A984C67C91A_tmsc7c.png",
+      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318603/IMG_1006_y8yv99.jpg",
       alt: "Living room project",
       caption: "Living Room Atmosphere",
     },
     {
-      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759279370/IMG_0920_erbz54.png",
+      src: "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318582/IMG_0070_cg8ejx.jpg",
       alt: "Living room decor",
       caption: "Modern Living Spaces",
     },
