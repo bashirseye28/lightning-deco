@@ -82,7 +82,7 @@ export default function Navbar() {
             className="fixed inset-0 bg-black z-[9999] flex flex-col"
           >
             {/* Top Bar */}
-            <div className="flex justify-between items-center px-6 py-5 border-b border-gold/40">
+            <div className="flex justify-between items-center px-6 py-5 border-b border-gold/30">
               <span className="text-lg font-semibold text-gold">Menu</span>
               <button
                 className="flex items-center space-x-1 text-gold hover:text-[#D4AF37] transition"
