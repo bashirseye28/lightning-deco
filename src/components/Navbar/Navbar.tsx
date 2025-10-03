@@ -1,16 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    // <nav className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm">
     <nav className="absolute top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 md:py-4 flex items-center justify-between safe-area-inset-top">
         {/* Logo (hidden when menu open) */}
@@ -63,21 +62,21 @@ export default function Navbar() {
         </button>
       </div>
 
-{/* Mobile Overlay Menu */}
-<AnimatePresence>
-  {isMenuOpen && (
-    <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: 0 }}
-      exit={{ x: "100%" }}
-      transition={{ type: "tween", duration: 0.4 }}
-      className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col z-40"  // ✅ Changed here
-    >
+      {/* Mobile Overlay Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.4 }}
+            className="fixed inset-0 bg-black/95 backdrop-blur-md flex flex-col z-40"
+          >
             {/* Top bar with Close button */}
             <div className="flex justify-between items-center px-6 py-5 border-b border-white/10">
-              <span className="text-lg text-white">Menu</span>
+              <span className="text-lg text-[#D4AF37]">Menu</span>
               <button
-                className="flex items-center space-x-1 text-white hover:text-[#D4AF37] transition"
+                className="flex items-center space-x-1 text-[#D4AF37] hover:text-white transition"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="text-sm">Close</span>
@@ -98,7 +97,7 @@ export default function Navbar() {
                   key={i}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-lg font-light text-white px-6 py-4 border-b border-white/10 hover:text-[#D4AF37] transition-colors duration-300"
+                  className="text-lg font-light text-[#D4AF37] px-6 py-4 border-b border-white/10 hover:text-white transition-colors duration-300"
                 >
                   {link.label}
                 </Link>
@@ -119,5 +118,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </nav>
-  )
+  );
 }
