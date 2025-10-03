@@ -63,27 +63,27 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Overlay Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.4 }}
-            className="fixed inset-0 bg-black/95 flex flex-col z-40"
-          >
-            {/* Top bar with Close button */}
-            <div className="flex justify-between items-center px-6 py-5 border-b border-white/10">
-              <span className="text-lg text-white">Menu</span>
-              <button
-                className="flex items-center space-x-1 text-white hover:text-[#D4AF37] transition"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <span className="text-sm">Close</span>
-                <X size={24} />
-              </button>
-            </div>
+{/* Mobile Overlay Menu */}
+<AnimatePresence>
+  {isMenuOpen && (
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ type: "tween", duration: 0.4 }}
+      className="fixed inset-0 bg-black/80 backdrop-blur-md flex flex-col z-40"
+    >
+      {/* Top bar with Close button */}
+      <div className="flex justify-between items-center px-6 py-5 border-b border-white/10">
+        <span className="text-lg text-white">Menu</span>
+        <button
+          className="flex items-center space-x-1 text-white hover:text-[#D4AF37] transition"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <span className="text-sm">Close</span>
+          <X size={24} />
+        </button>
+      </div>
 
             {/* Links */}
             <div className="flex flex-col w-full mt-6">
