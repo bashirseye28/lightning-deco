@@ -111,9 +111,9 @@ export default function Hero() {
           )}
 
           {/* Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end pb-40 md:pb-48 px-6 md:pl-12 text-white">
+          <div className="absolute inset-0 flex flex-col justify-end pb-40 md:pb-56 px-6 md:pl-12 text-white">
             {/* Title */}
-            <h2 className="text-2xl md:text-5xl font-playfair italic font-semibold mb-3 text-left">
+            <h2 className="text-3xl md:text-5xl font-playfair italic font-semibold mb-3 text-left">
               {slides[current].title}
             </h2>
 
@@ -133,8 +133,8 @@ export default function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Pagination Dots */}
-      <div className="absolute bottom-28 md:bottom-14 left-1/2 transform -translate-x-1/2 flex space-x-3">
+      {/* Pagination Dots — now directly below title on mobile */}
+      <div className="absolute bottom-32 md:bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-3">
         {slides.map((_, i) => (
           <button
             key={i}
@@ -147,7 +147,7 @@ export default function Hero() {
       </div>
 
       {/* Arrows - Desktop only */}
-      <div className="hidden md:flex absolute bottom-14 right-6 space-x-4">
+      <div className="hidden md:flex absolute bottom-20 right-6 space-x-4">
         <button
           onClick={prevSlide}
           className="p-3 rounded-full bg-black/50 text-white hover:bg-gold hover:text-black transition"
