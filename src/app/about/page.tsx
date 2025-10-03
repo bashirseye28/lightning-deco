@@ -6,7 +6,7 @@ import MissionVisionValues from "@/components/About/MissionVisionValues"
 // import MissionVisionValues from "@/components/About/MissionVisionValues"
 import ServicesTeaser from "@/components/About/ServicesTeaser"
 import Process from "@/components/About/Process"
-import Team from "@/components/About/Team"
+// import Team from "@/components/About/Team"
 import PhilosophyBlock from "@/components/About/PhilosophyBlock"
 import Testimonials from "@/components/About/Testimonials"
 import CTA from "@/components/About/CTA"
@@ -19,7 +19,7 @@ export default function AboutPage() {
       <MissionVisionValues />
       <ServicesTeaser />
       <Process />
-      <Team />
+      {/* <Team /> */}
       <PhilosophyBlock />
       <Testimonials />
       <CTA />
