@@ -8,7 +8,7 @@ import ServicesTeaser from "@/components/About/ServicesTeaser"
 import Process from "@/components/About/Process"
 import Team from "@/components/About/Team"
 import PhilosophyBlock from "@/components/About/PhilosophyBlock"
-// import Testimonials from "@/components/About/Testimonials"
+import Testimonials from "@/components/About/Testimonials"
 import CTA from "@/components/About/CTA"
 
 export default function AboutPage() {
@@ -21,6 +21,7 @@ export default function AboutPage() {
       <Process />
       <Team />
       <PhilosophyBlock />
+      <Testimonials />
       <CTA />
     </>
   )

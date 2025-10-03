@@ -5,50 +5,53 @@ import { useRef } from "react"
 import { Zap } from "lucide-react"
 
 export default function Philosophy() {
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   })
 
-  // Mobile parallax (background + text shift)
+  // Parallax values
+  const yDesktopBg = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
   const yMobileBg = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
   const yMobileText = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"])
   const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0.7])
+
+  const bgUrl =
+    "https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318588/IMG_0068_rhcqkz.jpg"
 
   return (
     <section
       ref={ref}
       className="relative h-[90vh] flex items-center justify-center text-center overflow-hidden"
     >
-      {/* Desktop Background */}
-      <div
-        className="hidden md:block absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage:
-            "url('https://res.cloudinary.com/dnmoy5wua/image/upload/v1759317501/IMG_0920_b0leiz.png')",
-        }}
-      ></div>
+      {/* Desktop Background with Parallax + subtle zoom */}
+      <motion.img
+        src={bgUrl}
+        alt="Philosophy background"
+        className="hidden md:block absolute inset-0 w-full h-full object-cover"
+        style={{ y: yDesktopBg }}
+        initial={{ scale: 1.05 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+      />
 
-      {/* Mobile Background with Parallax */}
-      <motion.div
-        className="block md:hidden absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318588/IMG_0068_rhcqkz.jpg')",
-          y: yMobileBg as any,
-        }}
-      ></motion.div>
+      {/* Mobile Background */}
+      <motion.img
+        src={bgUrl}
+        alt="Philosophy background mobile"
+        className="block md:hidden absolute inset-0 w-full h-full object-cover"
+        style={{ y: yMobileBg }}
+      />
 
-      {/* Overlay */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/70" />
 
-      {/* Content with parallax */}
+      {/* Content */}
       <motion.div
         className="relative z-10 max-w-4xl px-6"
         style={{ y: yMobileText, opacity: opacityText }}
       >
-        {/* Title */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +62,6 @@ export default function Philosophy() {
           Our Philosophy
         </motion.h2>
 
-        {/* Main Text */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +75,6 @@ export default function Philosophy() {
           Every project becomes a sanctuary of elegance, depth, and timeless harmony.
         </motion.p>
 
-        {/* Tagline */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

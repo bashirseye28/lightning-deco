@@ -8,7 +8,7 @@ import Image from "next/image"
 const slides = [
   {
     type: "video",
-    src: "https://res.cloudinary.com/dnmoy5wua/video/upload/v1759279456/58bc0b6f-1552-4475-b55c-8bc5e615fcaf_lylhrd.mp4",
+    src: "https://res.cloudinary.com/dnmoy5wua/video/upload/v1759318627/5406481a-e75d-4138-b043-19a56e52674e_qn9bhu.mp4",
     title: "Lightning Deco",
     description: "Luxury interior design studio. We design with light itself.",
     buttonText: "About Us",
