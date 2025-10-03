@@ -71,7 +71,8 @@ export default function Navbar() {
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ type: "tween", duration: 0.4 }}
-      className="fixed inset-0 bg-black/80 backdrop-blur-md flex flex-col z-40"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md flex flex-col z-40
+                 bg-gradient-to-b from-[#D4AF37]/10 to-transparent"
     >
       {/* Top bar with Close button */}
       <div className="flex justify-between items-center px-6 py-5 border-b border-white/10">
