@@ -9,7 +9,7 @@ import { Menu, X } from "lucide-react"
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // ✅ Lock body scroll
+  // ✅ Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : ""
     return () => {
@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <nav className="absolute top-0 left-0 w-full z-50 bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* Logo (hidden when menu open) */}
         {!isMenuOpen && (
           <Link href="/" className="flex items-center">
@@ -29,13 +29,13 @@ export default function Navbar() {
               width={140}
               height={40}
               priority
-              className="w-[110px] h-[30px] md:w-[140px] md:h-[40px] object-contain"
+              className="w-[110px] h-[30px] sm:w-[120px] sm:h-[35px] md:w-[140px] md:h-[40px] object-contain"
             />
           </Link>
         )}
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8">
+        {/* ✅ Desktop Menu is HIDDEN on tablets & below */}
+        <div className="hidden lg:flex items-center space-x-8">
           {[
             { href: "/", label: "Home" },
             { href: "/about", label: "About" },
@@ -55,22 +55,22 @@ export default function Navbar() {
           {/* CTA */}
           <Link
             href="/contact"
-            className="px-5 py-2 border border-[#D4AF37] text-[#D4AF37] rounded-full hover:bg-[#D4AF37] hover:text-black transition"
+            className="px-5 py-2 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
           >
             Request Consultation
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* ✅ Mobile / Tablet Menu Button (always visible except large desktops) */}
         <button
-          className="md:hidden flex items-center space-x-2 text-gold"
+          className="lg:hidden flex items-center space-x-2 text-gold"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* ✅ Mobile Fullscreen Fade-in Menu */}
+      {/* ✅ Mobile/Tablet Fullscreen Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -85,7 +85,7 @@ export default function Navbar() {
             <div className="flex justify-between items-center px-6 py-5 border-b border-gold/30">
               <span className="text-lg font-semibold text-gold">Menu</span>
               <button
-                className="flex items-center space-x-1 text-gold hover:text-[#D4AF37] transition"
+                className="flex items-center space-x-1 text-gold hover:text-[#b9962e] transition"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="text-sm">Close</span>
@@ -93,8 +93,8 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Links with dividing lines */}
-            <div className="flex flex-col flex-grow mt-2 divide-y divide-white/30">
+            {/* Links with Dividers */}
+            <div className="flex flex-col flex-grow divide-y divide-white/20">
               {[
                 { href: "/", label: "Home" },
                 { href: "/about", label: "About" },
@@ -106,19 +106,19 @@ export default function Navbar() {
                   key={i}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-lg font-light text-gold px-6 py-4 hover:text-[#D4AF37] transition"
+                  className="text-lg sm:text-xl font-light text-gold px-6 py-4 hover:text-[#D4AF37] transition"
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
 
-            {/* ✅ Outline CTA Button (bottom) */}
+            {/* CTA Button at Bottom */}
             <div className="px-6 py-6 border-t border-white/20">
               <Link
                 href="/contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="block w-full text-center px-6 py-3 border border-[#D4AF37] text-[#D4AF37] rounded-full hover:bg-[#D4AF37] hover:text-black transition"
+                className="block w-full text-center px-6 py-3 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
               >
                 Request Consultation
               </Link>
