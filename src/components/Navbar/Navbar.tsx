@@ -9,7 +9,7 @@ import { Menu, X } from "lucide-react"
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // ✅ Lock body scroll when mobile menu is open
+  // ✅ Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : ""
     return () => {
@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <nav className="absolute top-0 left-0 w-full z-50 bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-5 flex items-center justify-between">
         {/* Logo (hidden when menu open) */}
         {!isMenuOpen && (
           <Link href="/" className="flex items-center">
@@ -34,7 +34,7 @@ export default function Navbar() {
           </Link>
         )}
 
-        {/* ✅ Desktop Menu is HIDDEN on tablets & below */}
+        {/* ✅ Desktop menu hidden on tablets (lg+ only) */}
         <div className="hidden lg:flex items-center space-x-8">
           {[
             { href: "/", label: "Home" },
@@ -51,8 +51,6 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-
-          {/* CTA */}
           <Link
             href="/contact"
             className="px-5 py-2 border border-gold text-gold rounded-full hover:bg-gold hover:text-black transition"
@@ -61,7 +59,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* ✅ Mobile / Tablet Menu Button (always visible except large desktops) */}
+        {/* ✅ Mobile / Tablet Menu Button */}
         <button
           className="lg:hidden flex items-center space-x-2 text-gold"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -70,15 +68,15 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* ✅ Mobile/Tablet Fullscreen Menu */}
+      {/* ✅ Mobile/Tablet Slide-in Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             className="fixed inset-0 bg-black z-[9999] flex flex-col"
           >
             {/* Top Bar */}
