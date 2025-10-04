@@ -29,13 +29,13 @@ export default function Navbar() {
               width={140}
               height={40}
               priority
-              className="w-[110px] h-[30px] sm:w-[120px] sm:h-[35px] md:w-[140px] md:h-[40px] object-contain"
+              className="w-[110px] h-[30px] sm:w-[120px] sm:h-[35px] xl:w-[140px] xl:h-[40px] object-contain"
             />
           </Link>
         )}
 
-        {/* ✅ Desktop menu hidden on tablets (lg+ only) */}
-        <div className="hidden lg:flex items-center space-x-8">
+        {/* ✅ Desktop menu only for xl+ (not tablets) */}
+        <div className="hidden xl:flex items-center space-x-8">
           {[
             { href: "/", label: "Home" },
             { href: "/about", label: "About" },
@@ -59,9 +59,9 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* ✅ Mobile / Tablet Menu Button */}
+        {/* ✅ Mobile/Tablet Menu Button (up to lg) */}
         <button
-          className="lg:hidden flex items-center space-x-2 text-gold"
+          className="xl:hidden flex items-center space-x-2 text-gold"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
