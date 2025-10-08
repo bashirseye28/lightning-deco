@@ -4,31 +4,36 @@ const nextConfig = {
   swcMinify: true,
 
   images: {
-    // ✅ Remote images allowed
     remotePatterns: [
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/dnmoy5wua/**", // restrict to your Cloudinary account
+        pathname: "/dnmoy5wua/**",
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com", // optional (if you ever use Unsplash)
+        hostname: "images.unsplash.com",
       },
       {
         protocol: "https",
-        hostname: "assets.vercel.com", // optional (Vercel-hosted images)
+        hostname: "assets.vercel.com",
       },
     ],
-    // ✅ You can also set image formats
-    formats: ["image/avif", "image/webp"], // smaller, faster
+    formats: ["image/avif", "image/webp"],
   },
 
   experimental: {
-    // ✅ Future-proof for app router
     optimizeCss: true,
-    optimizePackageImports: ["framer-motion", "lucide-react"], // tree-shaking
+    optimizePackageImports: ["framer-motion", "lucide-react"],
   },
-};
 
-module.exports = nextConfig;
+  // ⚙️ Fix for the console warning:
+  // This ensures all social preview images resolve correctly
+  metadataBase: new URL("https://lightningdeco.com"),
+
+  // ⚡ Performance and security
+  compress: true,
+  poweredByHeader: false,
+}
+
+module.exports = nextConfig
