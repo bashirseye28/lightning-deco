@@ -1,11 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic"; // ✅ from Next.js
+import nextDynamic from "next/dynamic"; // ✅ renamed import alias
 import { motion } from "framer-motion";
 import Head from "next/head";
 
 // ✅ Dynamically import the Hero (avoids SSR + hydration issues)
-const ProjectsHero = dynamic(() => import("@/components/Projects/Hero"), {
+const ProjectsHero = nextDynamic(() => import("@/components/Projects/Hero"), {
   ssr: false,
   loading: () => (
     <div className="h-[88vh] flex items-center justify-center text-[#D4AF37]">
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
       </Head>
 
       <main className="bg-[#0B0B0B] text-white overflow-hidden">
-        {/* Hero Section */}
+        {/* 1️⃣ Cinematic Hero */}
         <ProjectsHero
           imageSrc="https://res.cloudinary.com/dnmoy5wua/image/upload/v1759318911/IMG_0973_soansb.png"
           title="The Art of Spatial Storytelling"
@@ -59,7 +59,7 @@ export default function ProjectsPage() {
           align="left"
         />
 
-        {/* Fade Transition Section */}
+        {/* 2️⃣ Fade Transition to Gallery */}
         <motion.div
           initial={{ opacity: 0, y: 80 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ export default function ProjectsPage() {
           </div>
         </motion.div>
 
-        {/* Projects Grid Placeholder */}
+        {/* 3️⃣ Projects Grid Placeholder */}
         <section className="bg-[#111] py-28 px-6 text-center">
           <p className="text-gray-500 font-lato">— Grid section coming next —</p>
         </section>
@@ -88,7 +88,7 @@ export default function ProjectsPage() {
   );
 }
 
-// ✅ Renamed to avoid conflict with Next.js's `dynamic()`
-export const runtimeDynamic = "force-dynamic";
+// ✅ Official Next.js recognized exports
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
