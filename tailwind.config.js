@@ -1,8 +1,5 @@
-import type { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin";
-import aspectRatio from "@tailwindcss/aspect-ratio";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -31,8 +28,8 @@ const config: Config = {
     },
   },
   plugins: [
-    // ✅ Safe, modern, TypeScript-compatible custom plugin
-    plugin(({ addUtilities }) => {
+    // 🪄 Custom font utility
+    function ({ addUtilities }) {
       const newUtilities = {
         ".font-heading-italic-bold": {
           fontFamily: "Playfair Display, serif",
@@ -40,14 +37,10 @@ const config: Config = {
           fontStyle: "italic",
         },
       };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
 
-      // ✅ new syntax: options object instead of array
-      addUtilities(newUtilities, { respectPrefix: false, respectImportant: false });
-    }),
-
-    // 📏 Aspect ratio plugin for consistent image grids
-    aspectRatio,
+    // 📏 Aspect ratio plugin for consistent grid cards
+    require("@tailwindcss/aspect-ratio"),
   ],
 };
-
-export default config;

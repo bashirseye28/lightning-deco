@@ -1,70 +1,73 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence, PanInfo } from "framer-motion"
-import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Play } from "lucide-react"
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import Image from "next/image";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import LazyVideo from "@/components/ui/LazyVideo";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 type GalleryItem = {
-  src: string
-  title: string
-  category: string
-  type: "image" | "video"
-  poster?: string
-}
+  src: string;
+  title: string;
+  category: string;
+  type: "image" | "video";
+  poster?: string;
+};
 
 type GalleryGridProps = {
-  items: GalleryItem[]
-}
+  items: GalleryItem[];
+};
 
 export default function GalleryGrid({ items }: GalleryGridProps) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-  const [itemsPerPage, setItemsPerPage] = useState(15)
-  const [visibleCount, setVisibleCount] = useState(15)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [visibleCount, setVisibleCount] = useState(15);
 
-  // 📱 Responsive items per page
+  // 📱 Responsive pagination
   useEffect(() => {
     const updateItemsPerPage = () => {
-      const perPage = window.innerWidth < 768 ? 9 : 15
-      setItemsPerPage(perPage)
-      setVisibleCount(perPage)
-    }
-    updateItemsPerPage()
-    window.addEventListener("resize", updateItemsPerPage)
-    return () => window.removeEventListener("resize", updateItemsPerPage)
-  }, [])
+      const perPage = window.innerWidth < 768 ? 9 : 15;
+      setItemsPerPage(perPage);
+      setVisibleCount(perPage);
+    };
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
+  }, []);
 
-  const currentItems = items.slice(0, visibleCount)
-  const hasMore = visibleCount < items.length
+  const currentItems = items.slice(0, visibleCount);
+  const hasMore = visibleCount < items.length;
 
-  // ✅ Lightbox navigation wrapped in useCallback
+  // 🔁 Lightbox navigation
   const prevLightbox = useCallback(() => {
     if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex - 1 + items.length) % items.length)
+      setLightboxIndex((lightboxIndex - 1 + items.length) % items.length);
     }
-  }, [lightboxIndex, items.length])
+  }, [lightboxIndex, items.length]);
 
   const nextLightbox = useCallback(() => {
     if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex + 1) % items.length)
+      setLightboxIndex((lightboxIndex + 1) % items.length);
     }
-  }, [lightboxIndex, items.length])
+  }, [lightboxIndex, items.length]);
 
-  // ✅ Keyboard navigation
+  // 🎹 Keyboard navigation
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (lightboxIndex === null) return
-      if (e.key === "Escape") setLightboxIndex(null)
-      if (e.key === "ArrowLeft") prevLightbox()
-      if (e.key === "ArrowRight") nextLightbox()
-    }
-    window.addEventListener("keydown", handleKey)
-    return () => window.removeEventListener("keydown", handleKey)
-  }, [lightboxIndex, prevLightbox, nextLightbox])
+      if (lightboxIndex === null) return;
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft") prevLightbox();
+      if (e.key === "ArrowRight") nextLightbox();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxIndex, prevLightbox, nextLightbox]);
 
   return (
-    <section className="py-16 px-4 sm:px-8 lg:px-20">
-      {/* ✅ Uniform Card Grid */}
+    <section className="py-16 px-4 sm:px-8 lg:px-20 bg-ivory text-black">
+      {/* ✨ Cinematic Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -74,45 +77,39 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
         {currentItems.map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.05 }}
             viewport={{ once: true }}
             className="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl hover:shadow-gold/20 transition-all cursor-pointer"
             onClick={() => setLightboxIndex(i)}
           >
-            <div className="relative w-full h-64 sm:h-72 lg:h-80">
+            {/* ✅ Perfect aspect ratio ensures equal cards */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
               {item.type === "image" ? (
-                <Image
+                <LazyLoadImage
                   src={item.src}
                   alt={item.title}
-                  fill
-                  className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
+                  effect="opacity"
+                  wrapperClassName="block w-full h-full"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
-                <>
-                  <video
-                    src={item.src}
-                    poster={item.poster || "/default-thumb.jpg"} // ✅ preview
-                    preload="metadata"
-                    className="w-full h-full object-cover rounded-2xl"
-                    muted
-                    playsInline
-                  />
-                  {/* ✅ Play Icon Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-black/60 rounded-full p-4 transition group-hover:scale-110">
-                      <Play className="w-10 h-10 text-white" />
-                    </div>
-                  </div>
-                </>
+                <LazyVideo
+                  src={item.src}
+                  poster={item.poster}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
               )}
             </div>
 
-            {/* Overlay */}
+            {/* 🖋 Overlay (hover info) */}
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
               <div className="p-5 w-full text-white">
-                <p className="uppercase text-xs tracking-widest text-gold">{item.category}</p>
+                <p className="uppercase text-xs tracking-widest text-gold">
+                  {item.category}
+                </p>
                 <h3 className="text-lg font-semibold">{item.title}</h3>
               </div>
             </div>
@@ -120,7 +117,7 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
         ))}
       </motion.div>
 
-      {/* ✅ Load More */}
+      {/* 📦 Load More */}
       {hasMore && (
         <div className="flex justify-center mt-12 mb-16">
           <button
@@ -132,7 +129,7 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
         </div>
       )}
 
-      {/* ✅ Lightbox with swipe */}
+      {/* 💡 Lightbox Viewer */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -141,7 +138,7 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-2 sm:p-6"
           >
-            {/* Close */}
+            {/* ❌ Close */}
             <button
               onClick={() => setLightboxIndex(null)}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-gold transition"
@@ -149,7 +146,7 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
               <X className="w-7 h-7 sm:w-8 sm:h-8" />
             </button>
 
-            {/* Arrows */}
+            {/* ⬅️➡️ Arrows */}
             <button
               onClick={prevLightbox}
               className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 text-white hover:text-gold transition"
@@ -163,17 +160,14 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
               <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10" />
             </button>
 
-            {/* Content with swipe gestures */}
+            {/* 🖼 Lightbox Content */}
             <motion.div
               key={lightboxIndex}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(
-                e: MouseEvent | TouchEvent | PointerEvent,
-                { offset, velocity }: PanInfo
-              ) => {
-                if (offset.x > 100 || velocity.x > 500) prevLightbox()
-                else if (offset.x < -100 || velocity.x < -500) nextLightbox()
+              onDragEnd={(_, { offset, velocity }: PanInfo) => {
+                if (offset.x > 100 || velocity.x > 500) prevLightbox();
+                else if (offset.x < -100 || velocity.x < -500) nextLightbox();
               }}
               className="relative w-full max-w-5xl max-h-[85vh] flex items-center justify-center"
             >
@@ -188,9 +182,12 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
               ) : (
                 <video
                   src={items[lightboxIndex].src}
-                  poster={items[lightboxIndex].poster || "/default-thumb.jpg"}
+                  poster={items[lightboxIndex].poster}
                   controls
                   autoPlay
+                  muted
+                  loop
+                  playsInline
                   className="w-full max-h-[85vh] rounded-lg"
                 />
               )}
@@ -199,5 +196,5 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
         )}
       </AnimatePresence>
     </section>
-  )
+  );
 }

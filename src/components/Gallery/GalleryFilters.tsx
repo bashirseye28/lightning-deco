@@ -1,22 +1,29 @@
-"use client"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 export type GalleryFiltersProps = {
-  categories: string[]
-  active: string
-  setActive: (cat: string) => void
-}
+  categories?: string[]; // 🧩 optional to prevent runtime error
+  active: string;
+  setActive: (cat: string) => void;
+};
 
-export default function GalleryFilters({ categories, active, setActive }: GalleryFiltersProps) {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+export default function GalleryFilters({
+  categories = [], // ✅ default empty array to prevent .map crash
+  active,
+  setActive,
+}: GalleryFiltersProps) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // 🧠 Return nothing if categories still empty (avoids flicker)
+  if (!categories.length) return null;
 
   return (
     <section className="bg-[#F9F7F1] py-12 px-6 lg:px-20">
       <div className="max-w-6xl mx-auto">
-        {/* Desktop Tabs */}
+        {/* 🖥 Desktop Tabs */}
         <div className="hidden md:flex justify-center gap-6 flex-wrap">
           {categories.map((cat) => (
             <motion.button
@@ -34,15 +41,17 @@ export default function GalleryFilters({ categories, active, setActive }: Galler
           ))}
         </div>
 
-        {/* Mobile Dropdown */}
-        <div className="relative md:hidden">
+        {/* 📱 Mobile Dropdown */}
+        <div className="relative md:hidden mt-2">
           <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
+            onClick={() => setDropdownOpen((prev) => !prev)}
             className="w-full flex items-center justify-between px-5 py-3 border border-gold text-gold rounded-lg bg-white shadow-sm"
           >
             <span className="font-medium">{active}</span>
             <ChevronDown
-              className={`w-5 h-5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+              className={`w-5 h-5 transition-transform ${
+                dropdownOpen ? "rotate-180" : ""
+              }`}
             />
           </button>
 
@@ -59,8 +68,8 @@ export default function GalleryFilters({ categories, active, setActive }: Galler
                   <button
                     key={cat}
                     onClick={() => {
-                      setActive(cat)
-                      setDropdownOpen(false)
+                      setActive(cat);
+                      setDropdownOpen(false);
                     }}
                     className={`w-full text-left px-5 py-3 text-sm transition-colors ${
                       active === cat
@@ -77,5 +86,5 @@ export default function GalleryFilters({ categories, active, setActive }: Galler
         </div>
       </div>
     </section>
-  )
+  );
 }
